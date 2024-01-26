@@ -6,4 +6,4 @@ RoLinker-Server is responsible for all things relating to the Discord bot, web-e
 Find more info here: https://rolinker.net/
 
 ## Dedication
-I hereby dedicate RoLinker to my Lord and Saviour, Jesus Christ.
+I hereby dedicate this project to my Lord and Saviour, Jesus Christ. ✝
