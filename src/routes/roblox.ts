@@ -22,7 +22,7 @@ interface UserInfoData {
     picture: string;
 };
 
-authRouter.get('/auth', async (req: Request, res: Response) => {
+authRouter.get('/auth/roblox', async (req: Request, res: Response) => {
     const code = req.query.code as string;
         const state = req.query.state as string;
         const discordId = getAuthUser(state);

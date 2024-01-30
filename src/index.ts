@@ -1,12 +1,15 @@
-import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
+import Koa from 'koa';
+import cors from '@koa/cors';
+import bodyParser from 'koa-bodyparser';
 import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
 import link from './commands/link.js';
 import clientReady from './events/clientReady.js';
 import interactionCreate from './events/interactionCreate.js';
 import { connectDatabase } from './database/mongo.js';
 import { deployCommands } from './deploy-commands.js';
-import authRouter from './routes/auth.js';
+import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js'
 
 dotenv.config();
 
@@ -20,14 +23,19 @@ client.on(Events.InteractionCreate, (...args) => interactionCreate.execute(...ar
 
 client.login(process.env.DISCORD_BOT_TOKEN);
 
-deployCommands()
+deployCommands();
 
-const app = express();
+const app = new Koa();
+
+app.use(cors({
+    credentials: true,
+    origin: 'https://rolinker.net'
+}));
+app.use(bodyParser());
 
 connectDatabase().then(() => {
-    app.use(express.json());
-    app.use(authRouter)
-    app.listen(3000, () => {
-        console.log('Server is running on port 3000');
-    });
+    app.use(userRoutes.routes());
+    app.use(authRoutes.routes());
+
+    app.listen(3000);
 })
