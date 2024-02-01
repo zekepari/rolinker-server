@@ -106,7 +106,6 @@ export const robloxCallback = async (ctx: Context) => {
             }
         });
 
-        console.log(tokenResponse)
         const userResponse = await axios.get('https://apis.roblox.com/oauth/v1/userinfo', {
             headers: {
                 Authorization: `Bearer ${tokenResponse.data.access_token}`
@@ -139,7 +138,6 @@ export const robloxCallback = async (ctx: Context) => {
 
         ctx.redirect('https://rolinker.net/manage/accounts')
     } catch (error) {
-        console.log(error);
         ctx.status = 500;
         ctx.body = { error: 'Internal Server Error' };
     }
